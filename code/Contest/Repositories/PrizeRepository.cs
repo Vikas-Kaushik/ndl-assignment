@@ -11,7 +11,7 @@ namespace Contest.Repositories
     {
         public IEnumerable<PrizeDto> GetAll()
         {
-            string filePath = "Data\\entries.csv";
+            string filePath = "Data\\prizes.csv";
 
             using (var fileStream = File.OpenText(filePath))
             {

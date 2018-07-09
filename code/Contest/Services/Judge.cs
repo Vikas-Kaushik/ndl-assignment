@@ -34,6 +34,9 @@ namespace Contest.Services
 
         public void SaveWinners(IWinnerRepository winnerRepository)
         {
+            // First reset the winnerRepository to embrace new winners and discard old ones
+            winnerRepository.Reset();
+
             foreach ((var prize, var candidates) in _prizeCandidates)
             {
                 ContestantDto winningContestant = candidates.GetBestCandidate();

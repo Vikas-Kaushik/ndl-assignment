@@ -9,5 +9,7 @@ namespace Contest.Repositories
     public interface IWinnerRepository
     {
         IEnumerable<WinnerDto> GetAll();
+        void Write(WinnerDto winner);
+        void Reset();
     }
 }

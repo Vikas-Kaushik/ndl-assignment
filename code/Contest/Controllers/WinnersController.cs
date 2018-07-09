@@ -27,7 +27,7 @@ namespace Contest.Controllers
 
         // POST api/winners
         [HttpPost]
-        public ActionResult<IEnumerable<WinnerDto>> Post([FromBody] string value)
+        public ActionResult<IEnumerable<WinnerDto>> Post()
         {
             _judgeService.DeclareWinners();
 

@@ -15,5 +15,16 @@ namespace Contest.Models
 
         //id,name,date_unlocked
         //1,iPhone X,2018-05-12 14:30:00
+        internal static PrizeDto FromCsvLine(string csvLine)
+        {
+            string[] values = csvLine.Split(',');
+
+            return new PrizeDto()
+            {
+                Id = Convert.ToUInt32(values[0]),
+                Name = values[1],
+                UnlockedDate = Convert.ToDateTime(values[2])
+            };
+        }
     }
 }

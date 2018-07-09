@@ -9,9 +9,11 @@ namespace Contest.Repositories
 {
     public class WinnerRepository : IWinnerRepository
     {
+        public const string filePath = "Data\\winners.csv";
+
         public IEnumerable<WinnerDto> GetAll()
         {
-            string filePath = "Data\\entries.csv";
+            if (!File.Exists(filePath)) this.Reset();
 
             using (var fileStream = File.OpenText(filePath))
             {
@@ -27,9 +29,15 @@ namespace Contest.Repositories
             }
         }
 
+        public void Reset()
+        {
+            string firstLine = "id,name,email,date_participated,prize";
+            File.WriteAllText(filePath, firstLine);
+        }
+
         public void Write(WinnerDto winnerDto)
         {
-            throw new NotImplementedException();
+            File.AppendAllText(filePath, WinnerDto.ToCsvLine(winnerDto));
         }
     }
 }
