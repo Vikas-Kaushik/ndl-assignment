@@ -56,12 +56,14 @@ namespace Contest.Services
             private Dictionary<ContestantDto, int> contestantsFreqMap;
             private readonly DateTime unlockedDate;            
             private TimeSpan bestTimeYet;
+            private int maxFreqYet;
 
             public Candidates(DateTime unlockedDate)
             {
                 this.unlockedDate = unlockedDate;
                 contestantsFreqMap = new Dictionary<ContestantDto, int>();
                 bestTimeYet = TimeSpan.MaxValue;
+                maxFreqYet = 0;
             }
 
             internal ContestantDto GetBestCandidate()
@@ -82,7 +84,7 @@ namespace Contest.Services
                 //      If contestant exists in contestantsFreqMap
                 //          Increase contestant Frequency
                 //          Remove all contestants who got lower frequency than current contestant
-                //      Else
+                //      Else If no candidate with freq more than 1 has been considered yet
                 //          Add the contestant to contestantsFreqMap with freq 1
                 // 5. Else (this contestant did worse than our best yet)
                 //      Ignore this contestant
@@ -102,9 +104,10 @@ namespace Contest.Services
                 {
                     if(contestantsFreqMap.ContainsKey(contestant))
                     {
-                        RemoveAllContestatWithLesserFrequency(++contestantsFreqMap[contestant]);
+                        maxFreqYet = ++contestantsFreqMap[contestant];
+                        RemoveAllContestatWithLesserFrequency(maxFreqYet);
                     }
-                    else
+                    else if(maxFreqYet <= 1)
                     {
                         contestantsFreqMap[contestant] = 1;
                     }
