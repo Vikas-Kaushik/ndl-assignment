@@ -31,7 +31,7 @@ namespace Contest.Repositories
 
         public void Reset()
         {
-            string firstLine = "id,name,email,date_participated,prize";
+            string firstLine = "id,name,email,date_participated,prize" + Environment.NewLine;
             File.WriteAllText(filePath, firstLine);
         }
 
