@@ -68,6 +68,9 @@ namespace Contest.Services
 
             internal ContestantDto GetBestCandidate()
             {
+                // RemoveAllContestatWithLesserFrequency(maxFreqYet);
+
+
                 return contestantsFreqMap.Keys.FirstOrDefault();
             }
 
@@ -83,7 +86,8 @@ namespace Contest.Services
                 // 4. Else If this contestant did as good as our best yet
                 //      If contestant exists in contestantsFreqMap
                 //          Increase contestant Frequency
-                //          Remove all contestants who got lower frequency than current contestant
+                //          If this contestnat freq is more than maximum freq yet
+                //              update maximum freq yet
                 //      Else If no candidate with freq more than 1 has been considered yet
                 //          Add the contestant to contestantsFreqMap with freq 1
                 // 5. Else (this contestant did worse than our best yet)
@@ -104,10 +108,10 @@ namespace Contest.Services
                 {
                     if(contestantsFreqMap.ContainsKey(contestant))
                     {
-                        maxFreqYet = ++contestantsFreqMap[contestant];
-                        RemoveAllContestatWithLesserFrequency(maxFreqYet);
+                        if (++contestantsFreqMap[contestant] > maxFreqYet)
+                            maxFreqYet = contestantsFreqMap[contestant];
                     }
-                    else if(maxFreqYet <= 1)
+                    else
                     {
                         contestantsFreqMap[contestant] = 1;
                     }
