@@ -63,15 +63,16 @@ namespace Contest.Services
                 this.unlockedDate = unlockedDate;
                 contestantsFreqMap = new Dictionary<ContestantDto, int>();
                 bestTimeYet = TimeSpan.MaxValue;
-                maxFreqYet = 0;
+                maxFreqYet = 1;
             }
 
             internal ContestantDto GetBestCandidate()
             {
                 // RemoveAllContestatWithLesserFrequency(maxFreqYet);
 
-
-                return contestantsFreqMap.Keys.FirstOrDefault();
+                return contestantsFreqMap
+                    .FirstOrDefault(kvp => kvp.Value == maxFreqYet)
+                    .Key;
             }
 
             internal void Update(ContestantDto contestant)
